@@ -3,57 +3,41 @@
 import Head from "next/head";
 import Image from "next/image";
 import styles from "../styles/Home.module.css";
+import Link from "next/link";
 
 export default function Home() {
+  const jsonData = require("../data/data.json");
+
+
   return (
     <div className={styles.container}>
       <Head>
-        <title>Awedan</title>
+        <title>Med-Aana</title>
         <meta
-          name="Awedan Letters in an instant."
-          content="Generate awedan letters in an instant."
+          name="Seamless hospital appointments using QR code."
+          content="Get appointments in an instant. Forget the queues."
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <main className={styles.main}>
         <h1 className={styles.title}>
-          Welcome to <a href="#">आवेदन</a>
+          Welcome to <Link href="/">Devkamal Hospital</Link>
         </h1>
-        <p className={styles.description}>आपकी योजना आपका अधिकार</p>
 
         <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h2>प्रधान मंत्री ग्रामीण आवास योजना &rarr;</h2>
-            <p>
-              प्रधान मंत्री ग्रामीण आवास योजना को लेने के लिए सारे ज़रूरी आवेदन
-              पत्र।{" "}
-            </p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h2>Learn &rarr;</h2>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/canary/examples"
-            className={styles.card}
-          >
-            <h2>Examples &rarr;</h2>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h2>Deploy &rarr;</h2>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
+          {jsonData.map((item, index) => {
+            return (
+              <Link key={index} href={`/${encodeURIComponent(item.name)}`}>
+                <div className={styles.card}>
+                  <h2>{item.name} &rarr;</h2>
+                  <p>{item.specialization}</p>
+                </div>
+              </Link>
+            );
+          })}
         </div>
+        <div className={styles.grid}></div>
       </main>
 
       <footer className={styles.footer}>
@@ -64,7 +48,12 @@ export default function Home() {
         >
           Powered by{" "}
           <span className={styles.logo}>
-            <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
+            <Image
+              src="/MedAana.svg"
+              alt="MedAana Logo"
+              width={72}
+              height={16}
+            />
           </span>
         </a>
       </footer>
