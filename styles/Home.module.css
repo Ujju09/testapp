@@ -73,6 +73,24 @@
   max-width: 800px;
 }
 
+.column{
+  
+
+  padding-top: 1rem;
+  align-items: center;
+  justify-content: center;
+
+} 
+
+.input{
+  padding: 1.6rem;
+  margin-top: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  width: 80%;
+  font-size: 1.2rem;
+}
+
 .card {
   margin: 1rem;
   padding: 1.5rem;
@@ -91,6 +109,7 @@
   color: #0070f3;
   border-color: #0070f3;
 }
+
 
 .card h2 {
   margin: 0 0 1rem 0;
@@ -122,9 +141,18 @@
   cursor: pointer;
 }
 
+.button:disabled{
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
 @media (max-width: 600px) {
   .grid {
     width: 100%;
     flex-direction: column;
+     
+  }
+  .input{
+    width: 90%;
   }
 }

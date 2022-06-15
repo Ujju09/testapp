@@ -2,7 +2,6 @@
 
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
 import { getFirestore } from "firebase/firestore";
 import { collection, addDoc, getDocs } from "firebase/firestore";
 
@@ -33,11 +32,20 @@ const AddHospitals = async () => {
 };
 
 const GetDoctorsByHospital = async (id) => {
+  var data = [];
   try {
     const querysnapshots = await getDocs(
       collection(db, "hospitals", id, "doctors")
-    );
-    console.log(querysnapshots.docs[0].data());
+    )
+      .then((snap) => {
+        snap.forEach((doc) => {
+          data.push(doc.data());
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    return data;
   } catch (e) {
     console.error("Error adding document: ", e);
   }
@@ -46,16 +54,49 @@ const GetDoctorsByHospital = async (id) => {
 const GethospitalData = async (id) => {
   try {
     const querysnapshots = await getDocs(collection(db, "hospitals"), id);
-    console.log(querysnapshots.docs[0].data());
+    // console.log(querysnapshots.docs[0].data());
     return querysnapshots.docs[0].data("name");
   } catch (e) {
     console.error("Error adding document: ", e);
   }
 };
+
+const CreateAppointments = async (id, props) => {
+  try {
+    const docRef = await addDoc(
+      collection(db, "hospitals", id, "appointments"),
+      {
+        doctor: props.doctor,
+        patient: props.patient,
+        date: props.date,
+        mobile: props.mobile,
+        age: props.age,
+      }
+    );
+    return docRef.id;
+  } catch (e) {
+    console.error("Error adding document: ", e);
+  }
+};
+
+const GetAppointmentData = async (hospitalID, id) => {
+  try {
+    const querysnapshots = await getDocs(
+      collection(db, "hospitals", hospitalID, "appointments"),
+      id
+    );
+    return querysnapshots.docs[0].data();
+  } catch (e) {
+    console.error("Error adding document: ", e);
+  }
+};
+
 const exportItems = {
   AddHospitals,
   GetDoctorsByHospital,
   GethospitalData,
+  CreateAppointments,
+  GetAppointmentData,
 };
 
 export default exportItems;
