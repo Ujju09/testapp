@@ -6,7 +6,6 @@ import { useRouter } from "next/router";
 import exportItems from "../components/config";
 import { useState } from "react";
 
-
 export default function Doctor() {
   const router = useRouter();
   const { doctor } = router.query;
@@ -104,7 +103,6 @@ export default function Doctor() {
         >
           {loading ? "Loading..." : `Book Appointment`}
         </button>
-       
       </main>
       <footer className={styles.footer}>
         <a href="" target="_blank" rel="noopener noreferrer">

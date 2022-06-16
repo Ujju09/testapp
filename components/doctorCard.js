@@ -15,7 +15,7 @@ const DoctorCard = () => {
       setData(snap);
       setLoading(false);
     });
-  }, []);
+  }, []); 
 
   return (
     <>

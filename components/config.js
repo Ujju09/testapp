@@ -2,8 +2,15 @@
 
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getFirestore } from "firebase/firestore";
-import { collection, addDoc, getDocs } from "firebase/firestore";
+import { DocumentSnapshot, getFirestore } from "firebase/firestore";
+import {
+  collection,
+  addDoc,
+  getDocs,
+  doc,
+  onSnapshot,
+} from "firebase/firestore";
+import { useState, useEffect } from "react";
 
 const firebaseConfig = {
   apiKey: "AIzaSyATmk9lDf2ZJ5kOO4Nt7W4ZkDuGCfbYSSw",
@@ -71,6 +78,7 @@ const CreateAppointments = async (id, props) => {
         date: props.date,
         mobile: props.mobile,
         age: props.age,
+        isPaid: false,
       }
     );
     return docRef.id;
@@ -79,24 +87,14 @@ const CreateAppointments = async (id, props) => {
   }
 };
 
-const GetAppointmentData = async (hospitalID, id) => {
-  try {
-    const querysnapshots = await getDocs(
-      collection(db, "hospitals", hospitalID, "appointments"),
-      id
-    );
-    return querysnapshots.docs[0].data();
-  } catch (e) {
-    console.error("Error adding document: ", e);
-  }
-};
+
 
 const exportItems = {
+  db,
   AddHospitals,
   GetDoctorsByHospital,
   GethospitalData,
   CreateAppointments,
-  GetAppointmentData,
 };
 
 export default exportItems;
