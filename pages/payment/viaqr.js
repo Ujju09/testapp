@@ -8,6 +8,8 @@ import exportItems from "../../components/config";
 import { useEffect, useState } from "react";
 import { doc, onSnapshot } from "firebase/firestore";
 import Link from "next/link";
+
+
 export default function QRPaymentConfirmationPage() {
   const router = useRouter();
   const { id } = router.query;
@@ -25,7 +27,6 @@ export default function QRPaymentConfirmationPage() {
           setPaymentStatus(doc.data().isPaid);
         }
       );
-      console.log(paymentStatus);
       return paymentStatus;
     } catch (e) {
       console.error("Error adding document: ", e);

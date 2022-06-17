@@ -1,6 +1,6 @@
 /** @format */
 
-import { jsPDF } from "jspdf";
+import { jsPDF, setFontSize, setTextColor, line } from "jspdf";
 import { useEffect, useState } from "react";
 import styles from "../../styles/Home.module.css";
 import { useRouter } from "next/router";
@@ -15,19 +15,38 @@ export default function PDF() {
 
   const { FetchConfirmedAppointmentData } = exportItems;
 
+  const [name, setName] = useState("");
+  const [doctor, setDoctor] = useState("");
+  const [date, setDate] = useState("");
+
   useEffect(() => {
     const docSnap = FetchConfirmedAppointmentData(hospitalID, id);
-    console.log(docSnap);
     docSnap.then((snapshot) => {
-      console.log(snapshot.data());
+      setName(snapshot.data().patient);
+      setDoctor(snapshot.data().doctor);
+      setDate(snapshot.data().date);
     });
   }, []);
-
-  const docs = new jsPDF();
+  const docs = new jsPDF({
+    orientation: "p",
+    unit: "mm",
+    format: "a4",
+    putOnlyUsedFonts: true,
+  });
+  docs.setFontSize(24);
   docs.text("Devkamal Hospital", 10, 10);
+  docs.setFontSize(12);
+  docs.line(10, 15, 200, 15);
+  docs.line(10, 270, 200, 270);
+
+  docs.setTextColor("#3d423d");
+  docs.text(`${name}`, 10, 20);
+  docs.text(`Appointment with ${doctor}`, 10, 30);
+  docs.text(`Date: ${date}`, 10, 40);
+  docs.text(`Your appointment ID: ${id}`, 10, 50);
 
   const downloadPDF = () => {
-    docs.save("test.pdf");
+    docs.save(`${id}.pdf`);
   };
 
   return (

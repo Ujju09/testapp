@@ -4,7 +4,8 @@ import exportItems from "../components/config";
 import { useState, useEffect } from "react";
 import styles from "../styles/Home.module.css";
 import Link from "next/link";
-import { Spinner } from "react-bootstrap";
+
+
 const DoctorCard = () => {
   const { GetDoctorsByHospital } = exportItems;
   const [loading, setLoading] = useState(true);
