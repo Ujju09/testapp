@@ -23,7 +23,6 @@ export default function QRPaymentConfirmationPage() {
         doc(db, "hospitals", hospitalID, "appointments", id),
         (doc) => {
           setPaymentStatus(doc.data().isPaid);
-          // console.log(paymentStatus);
         }
       );
       console.log(paymentStatus);
@@ -48,7 +47,11 @@ export default function QRPaymentConfirmationPage() {
         >
           इसको काउंटर पे दिखा के पैसे जमा करे।
         </h2>
-        {paymentStatus === false ? <ApproveText /> : <ConfirmationAndInvoice />}
+        {paymentStatus === false ? (
+          <ApproveText />
+        ) : (
+          <ConfirmationAndInvoice id={id} />
+        )}
         <div className={styles.grid}>
           <div style={{ background: "white", padding: "16px" }}>
             <QRCode value={id} />
@@ -86,7 +89,7 @@ const ApproveText = () => {
   );
 };
 
-const ConfirmationAndInvoice = () => {
+const ConfirmationAndInvoice = (props) => {
   return (
     <div className={styles.card}>
       <label>
@@ -107,7 +110,14 @@ const ConfirmationAndInvoice = () => {
           fontSize: "1rem",
         }}
       >
-        <Link href="/invoice">Download करे</Link>
+        <Link
+          href={{
+            pathname: "/payment/pdf",
+            query: { id: props.id },
+          }}
+        >
+          Download करे
+        </Link>
       </button>
     </div>
   );

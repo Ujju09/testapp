@@ -3,13 +3,7 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { DocumentSnapshot, getFirestore } from "firebase/firestore";
-import {
-  collection,
-  addDoc,
-  getDocs,
-  doc,
-  onSnapshot,
-} from "firebase/firestore";
+import { collection, addDoc, getDocs, doc, getDoc } from "firebase/firestore";
 import { useState, useEffect } from "react";
 
 const firebaseConfig = {
@@ -87,7 +81,17 @@ const CreateAppointments = async (id, props) => {
   }
 };
 
-
+const FetchConfirmedAppointmentData = async (hospitalID, id) => {
+  console.log("Fetching docs");
+  try {
+    const docRef = doc(db, `hospitals/${hospitalID}/appointments/${id}`);
+    console.log(docRef);
+    const snapshot = await getDoc(docRef);
+    return snapshot;
+  } catch (e) {
+    console.error("Error adding document: ", e);
+  }
+};
 
 const exportItems = {
   db,
@@ -95,6 +99,7 @@ const exportItems = {
   GetDoctorsByHospital,
   GethospitalData,
   CreateAppointments,
+  FetchConfirmedAppointmentData,
 };
 
 export default exportItems;
