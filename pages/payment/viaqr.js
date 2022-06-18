@@ -9,7 +9,6 @@ import { useEffect, useState } from "react";
 import { doc, onSnapshot } from "firebase/firestore";
 import Link from "next/link";
 
-
 export default function QRPaymentConfirmationPage() {
   const router = useRouter();
   const { id } = router.query;
@@ -55,7 +54,7 @@ export default function QRPaymentConfirmationPage() {
         )}
         <div className={styles.grid}>
           <div style={{ background: "white", padding: "16px" }}>
-            <QRCode value={id} />
+            {id === undefined || null ? <></> : <QRCode value={id} />}
           </div>
           <p
             style={{
