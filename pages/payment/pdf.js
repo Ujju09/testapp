@@ -7,7 +7,6 @@ import { useRouter } from "next/router";
 import exportItems from "../../components/config";
 import autoTable from "jspdf-autotable";
 import Head from "next/head";
-import font from "./Comfortaa-Bold";
 
 // Default export is a4 paper, portrait, using millimeters for units
 
@@ -24,7 +23,6 @@ export default function PDF() {
   const [age, setAge] = useState("");
   const [gender, setGender] = useState("");
 
-  const [patientData, setPatientData] = useState(initialData);
   useEffect(() => {
     const docSnap = FetchConfirmedAppointmentData(hospitalID, id);
     docSnap.then((snapshot) => {
@@ -52,7 +50,6 @@ export default function PDF() {
   docs.text(`Your appointment with ${doctor} is confirmed.`, 10, 50);
 
   autoTable(docs, {
-    // head: [["Name", "Age", "Gender", "Appointment Date", "ID"]],
     margin: { top: 60, left: 10, right: 10, bottom: 10 },
     body: [
       [`Name`, `${name}`],
@@ -63,9 +60,6 @@ export default function PDF() {
     ],
   });
   docs.line(10, 270, 200, 270);
-  docs.addFileToVFS("Comfortaa-Bold.ttf", font);
-  docs.addFont("Comfortaa-Bold.ttf", "Comfortaa-Bold", "bold");
-  docs.setFont("Comfortaa-Bold", "bold");
   docs.text("Appointment enabled by MedAana", 105, 280, "center");
   docs.setFontSize(10);
   docs.text("--- Making healthcare hassle free ---", 105, 285, "center");
