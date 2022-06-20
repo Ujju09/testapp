@@ -29,17 +29,10 @@ export default function Home() {
       </main>
 
       <footer className={styles.footer}>
-        <a href="" target="_blank" rel="noopener noreferrer">
-          Empowering people{" "}
-          <span className={styles.logo}>
-            <Image
-              src="/MedAana.svg"
-              alt="MedAana Logo"
-              width={72}
-              height={16}
-            />
-          </span>
-        </a>
+        Hassle-free healthcare{" -"}
+        <span className={styles.logo}>
+          <Image src="/MedAana.svg" alt="MedAana Logo" width={72} height={16} />
+        </span>
       </footer>
     </div>
   );

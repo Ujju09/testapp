@@ -101,6 +101,7 @@
   border-radius: 10px;
   transition: color 0.15s ease, border-color 0.15s ease;
   max-width: 300px;
+  min-width: 200px;
 }
 
 .card:hover,
@@ -169,4 +170,9 @@
   .input{
     width: 90%;
   }
+}
+
+.link{
+  color: white;
+  text-decoration: none;
 }

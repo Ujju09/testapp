@@ -96,29 +96,30 @@ const ConfirmationAndInvoice = (props) => {
         <h4>Your appointment is confirmed.</h4>
         <p>आपका अपॉइंटमेंट बुक हो गया है ।</p>
       </label>
-
-      <button
+      <Link
+        href={{
+          pathname: "/payment/pdf",
+          query: { id: props.id },
+        }}
         style={{
-          display: "flex",
-          margin: "auto",
-          background: "green",
-          color: "white",
-          padding: "1rem",
-          borderRadius: "12px",
-          color: "white",
-          border: "none",
-          fontSize: "1rem",
+          textDecoration: "none",
         }}
       >
-        <Link
-          href={{
-            pathname: "/payment/pdf",
-            query: { id: props.id },
+        <button
+          style={{
+            display: "flex",
+            margin: "auto",
+            background: "green",
+            padding: "1rem",
+            borderRadius: "12px",
+            border: "none",
+            fontSize: "1rem",
+            color: "white",
           }}
         >
           Download करे
-        </Link>
-      </button>
+        </button>
+      </Link>
     </div>
   );
 };

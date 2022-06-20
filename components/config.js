@@ -72,6 +72,7 @@ const CreateAppointments = async (id, props) => {
         mobile: props.mobile,
         age: props.age,
         isPaid: false,
+        gender: props.gender,
       }
     );
     return docRef.id;

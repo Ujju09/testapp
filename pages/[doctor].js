@@ -22,6 +22,7 @@ export default function Doctor() {
     date: date.toLocaleDateString(),
     mobile: "",
     age: "",
+    gender: "",
   });
 
   const [loading, setLoading] = useState(false);
@@ -47,7 +48,6 @@ export default function Doctor() {
   const handleChange = (event) => {
     const { name, value } = event.target;
     setAppointmentData({ ...appointmentData, [name]: value });
-    console.log(appointmentData);
   };
 
   return (
@@ -95,6 +95,63 @@ export default function Doctor() {
             name="age"
             onChange={handleChange}
           />
+
+          <div
+            style={{
+              display: "flex",
+              paddingTop: "10px",
+              paddingBottom: "4px",
+            }}
+          >
+            <label
+              style={{
+                fontSize: "1.2rem",
+              }}
+            >
+              Gender (लिंग)
+            </label>
+          </div>
+          <div
+            style={{
+              display: "flex",
+              width: "80%",
+              justifyContent: "space-between",
+            }}
+          >
+            <div>
+              <input
+                name="gender"
+                type="radio"
+                onChange={handleChange}
+                value="Male"
+              />
+              <label
+                htmlFor="Male"
+                style={{
+                  fontSize: "1.2rem",
+                }}
+              >
+                पुरुष
+              </label>
+            </div>
+
+            <div>
+              <input
+                name="gender"
+                type="radio"
+                onChange={handleChange}
+                value="Female"
+              ></input>
+              <label
+                htmlFor="Female"
+                style={{
+                  fontSize: "1.2rem",
+                }}
+              >
+                महिला
+              </label>
+            </div>
+          </div>
         </div>
         <button
           className={styles.button}
@@ -105,17 +162,10 @@ export default function Doctor() {
         </button>
       </main>
       <footer className={styles.footer}>
-        <a href="" target="_blank" rel="noopener noreferrer">
-          Digital Appointments at Devkamal Hospital{"-"}
-          <span className={styles.logo}>
-            <Image
-              src="/MedAana.svg"
-              alt="MedAana Logo"
-              width={72}
-              height={16}
-            />
-          </span>
-        </a>
+        Superfast Healthcare {"-"}
+        <span className={styles.logo}>
+          <Image src="/MedAana.svg" alt="MedAana Logo" width={72} height={16} />
+        </span>
       </footer>
     </div>
   );
