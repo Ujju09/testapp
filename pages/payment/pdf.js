@@ -7,6 +7,7 @@ import { useRouter } from "next/router";
 import exportItems from "../../components/config";
 import autoTable from "jspdf-autotable";
 import Head from "next/head";
+import QRCode from "react-qr-code";
 
 // Default export is a4 paper, portrait, using millimeters for units
 
@@ -22,6 +23,9 @@ export default function PDF() {
   const [date, setDate] = useState("");
   const [age, setAge] = useState("");
   const [gender, setGender] = useState("");
+  const [schedule, setSchedule] = useState("");
+
+  const [image, setImage] = useState("");
 
   useEffect(() => {
     const docSnap = FetchConfirmedAppointmentData(hospitalID, id);
@@ -31,6 +35,7 @@ export default function PDF() {
       setDate(snapshot.data().date);
       setAge(snapshot.data().age);
       setGender(snapshot.data().gender);
+      setSchedule(snapshot.data().schedule);
     });
   }, []);
 
@@ -46,8 +51,17 @@ export default function PDF() {
   docs.text("Address", 10, 20);
   docs.text("Phone", 10, 30);
   docs.line(10, 40, 200, 40);
-
-  docs.text(`Your appointment with ${doctor} is confirmed.`, 10, 50);
+  if (schedule === "") {
+    docs.text(`Your appointment with ${doctor} is confirmed.`, 10, 50);
+  } else {
+    var sch = new Date(schedule);
+    var schLocal = sch.toLocaleDateString();
+    docs.text(
+      `Your appointment with ${doctor} is scheduled on ${schLocal}.`,
+      10,
+      50
+    );
+  }
 
   autoTable(docs, {
     margin: { top: 60, left: 10, right: 10, bottom: 10 },
@@ -55,10 +69,11 @@ export default function PDF() {
       [`Name`, `${name}`],
       [`Age`, `${age}`],
       [`Gender`, `${gender}`],
-      [`Date`, `${date}`],
+      [`Booking Date`, `${date}`],
       [`Appointment ID`, `${id}`],
     ],
   });
+
   docs.line(10, 270, 200, 270);
   docs.text("Appointment enabled by MedAana", 105, 280, "center");
   docs.setFontSize(10);
@@ -75,6 +90,7 @@ export default function PDF() {
       </Head>
       <main className={styles.main}>
         <h2>Your appointment slip &darr;</h2>
+
         <div className={styles.grid}>
           <button className={styles.button} onClick={downloadPDF}>
             Download

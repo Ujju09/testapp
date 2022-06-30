@@ -13,8 +13,6 @@ export default function Doctor() {
   const { CreateAppointments } = exportItems;
   let id = "AJ0nXPw72TKOIq7kEQzR";
   const date = new Date();
-  const time =
-    date.getHours() + ":" + date.getMinutes() + ": " + date.getSeconds();
 
   const initialData = Object.freeze({
     doctor: doctor,
@@ -23,6 +21,7 @@ export default function Doctor() {
     mobile: "",
     age: "",
     gender: "",
+    schedule: "",
   });
 
   const [loading, setLoading] = useState(false);
@@ -35,6 +34,7 @@ export default function Doctor() {
       alert("Please fill all the fields");
     } else {
       setLoading(!loading);
+
       CreateAppointments(id, appointmentData).then((res) => {
         //Refresh bug in the qr page
         router.push({
@@ -48,6 +48,7 @@ export default function Doctor() {
   const handleChange = (event) => {
     const { name, value } = event.target;
     setAppointmentData({ ...appointmentData, [name]: value });
+    console.log(appointmentData);
   };
 
   return (
@@ -93,6 +94,20 @@ export default function Doctor() {
             type="text"
             placeholder="मरीज़ की उम्र"
             name="age"
+            onChange={handleChange}
+          />
+          <label
+            style={{
+              fontSize: "1.2rem",
+            }}
+          >
+            भविष्य में दिखने के लिए डेट चुने:
+          </label>
+          <input
+            className={styles.input}
+            type="date"
+            placeholder="दिखाने का डेट "
+            name="schedule"
             onChange={handleChange}
           />
 
